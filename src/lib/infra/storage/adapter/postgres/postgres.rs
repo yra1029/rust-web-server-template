@@ -4,7 +4,6 @@ use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 
 use crate::infra::config::Config;
 
-
 pub type Db = Arc<Pool<Postgres>>;
 
 pub async fn db_connect(config: &Config) -> Pool<Postgres> {

@@ -3,7 +3,7 @@ use std::sync::Arc;
 use rust_web_server_lib::application::flows::user_service::UserService;
 use rust_web_server_lib::infra::config::Config;
 use rust_web_server_lib::infra::storage::adapter::create_repositories;
-use rust_web_server_lib::infra::storage::postgres::db_connect;
+use rust_web_server_lib::infra::storage::adapter::postgres::postgres::db_connect;
 use rust_web_server_lib::presentation::http::{HttpServer, HttpServerConfig};
 
 #[tokio::main]

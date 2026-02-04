@@ -1,6 +1,7 @@
-use crate::{domain::user::repository::UserRepositoryPort, infra::storage::{postgres::Db, adapter::user_repository::UserRepository}};
+use crate::{domain::user::repository::UserRepositoryPort, infra::storage::adapter::postgres::{postgres::Db, user_repository::UserRepository}};
 
-pub mod user_repository;
+
+pub mod postgres;
 
 /// Container for all repository implementations (adapters).
 ///
