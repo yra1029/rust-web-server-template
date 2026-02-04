@@ -1,4 +1,4 @@
-use crate::{domain::user::repository::UserRepositoryPort, infra::storage::adapter::postgres::{ Db, user_repository::UserRepository}};
+use crate::{domain::user::repository::UserRepositoryPort};
 
 
 pub mod postgres;
@@ -14,13 +14,17 @@ pub struct Repositories<UR: UserRepositoryPort> where UR: Send + Sync + 'static 
     pub user_repository: UR,
 }
 
-/// Factory function for creating concrete repository instances.
+/// Factory function for creating repository instances.
 ///
-/// This function initializes all repository adapters with the provided database
-/// connection. It centralizes repository creation and makes dependency injection
-/// explicit at the application startup.
-pub fn create_repositories(db: Db) -> eyre::Result<Repositories<UserRepository>> {
-    Ok(Repositories {
-        user_repository: UserRepository::new(db),
-    })
+/// This function initializes repository adapters using a provided creator function(later could be extended to create multiple repositories).
+/// It centralizes repositories creation and makes dependency injection explicit at
+/// application startup. The generic design allows for different database types and
+/// repository implementations.
+pub fn create_repositories<DB: Clone, UR, URC>(db: DB, repository_creator: URC) -> eyre::Result<Repositories<UR>>
+where
+    UR: UserRepositoryPort + Send + Sync + 'static,
+    URC: FnOnce(DB) -> eyre::Result<UR>,
+{
+    let user_repository = repository_creator(db.clone())?;
+    Ok(Repositories { user_repository })
 }
