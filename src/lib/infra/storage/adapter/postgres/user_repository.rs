@@ -2,7 +2,7 @@ use async_trait::async_trait;
 use sqlx::Row;
 use uuid::Uuid;
 
-use crate::{domain::user::{error::UserDomainError, model::{CreateUser, UpdateUser, User}, repository::UserRepositoryPort}, infra::storage::adapter::postgres::postgres::Db};
+use crate::{domain::user::{error::UserDomainError, model::{CreateUser, UpdateUser, User}, repository::UserRepositoryPort}, infra::storage::adapter::postgres::Db};
 
 /// PostgreSQL implementation of the user repository.
 ///
