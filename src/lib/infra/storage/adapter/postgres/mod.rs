@@ -4,7 +4,7 @@ use std::sync::Arc;
 
 use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
 
-use crate::infra::{config::Config, storage::adapter::{Repositories, create_repositories, postgres::user_repository::UserRepository}};
+use crate::infra::{config::Config, storage::{StorageRepositories, adapter::postgres::user_repository::UserRepository, create_repositories}};
 
 pub type Db = Arc<Pool<Postgres>>;
 
@@ -17,6 +17,6 @@ pub async fn db_connect(config: &Config) -> Db {
     )
 }
 
-pub fn create_postgres_repositories(db: Db) -> eyre::Result<Repositories<UserRepository>> {
+pub fn create_postgres_repositories(db: Db) -> eyre::Result<StorageRepositories<UserRepository>> {
     create_repositories(db, |db| Ok(UserRepository::new(db)))
 }
